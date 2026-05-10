@@ -1,0 +1,23 @@
+# .gitignore
+
+# ------------------------------------------------------------------------
+# DIRETORIOS IGNORADOS (SEGURANCA E AUDITORIA)
+# ------------------------------------------------------------------------
+# Ignora a pasta de logs gerada dinamicamente pelos scripts.
+# Motivo: Evita o vazamento (data leak) de nomes de utilizadores e historico de execucao.
+Logs/
+
+# ------------------------------------------------------------------------
+# ARQUIVOS DE SISTEMA E TEMPORARIOS (RUIDO DO WINDOWS)
+# ------------------------------------------------------------------------
+# Ignora ficheiros temporarios gerados pelo PowerShell ou pelo Sistema Operativo
+*.tmp
+*.temp
+*.bak
+
+# Ignora caches de miniaturas criadas pelo Windows Explorer ao abrir pastas
+Thumbs.db
+ehthumbs.db
+
+# Ignora ficheiros de metadados de personalizacao de pastas do Windows
+Desktop.ini
