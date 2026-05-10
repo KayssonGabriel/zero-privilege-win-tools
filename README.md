@@ -14,7 +14,7 @@
 
 <br/>
 
-[🚀 Como Usar](#-como-usar) · [📂 Estrutura](#-arquitetura) · [🌐 Módulos de Reparo](#-resumo-de-módulos-de-reparo) · [🛡️ Segurança](#-segurança-e-auditoria)
+[🚀 Como Usar](#-como-usar) · [📂 Estrutura](#-arquitetura) · [🌐 Módulos de Reparo](#%EF%B8%8F-resumo-de-módulos-de-reparo) · [🛡️ Segurança](#-segurança-e-auditoria)
 
 </div>
 
