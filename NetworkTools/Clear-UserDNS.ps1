@@ -40,6 +40,7 @@ try {
 
     Write-Host "[1/1] Limpando Cache DNS do Windows..." -ForegroundColor Yellow
     ipconfig /flushdns | Out-Null
+    if ($LASTEXITCODE -ne 0) { throw "Limpeza do cache DNS falhou (código $LASTEXITCODE)." }
     
     Write-Host "`n[SUCESSO] Cache de rede limpo! Por favor, feche e abra o seu navegador novamente." -ForegroundColor Green
 }

@@ -40,10 +40,12 @@ try {
 
     Write-Host "[1/2] Limpando Tickets Kerberos em cache..." -ForegroundColor Yellow
     klist purge | Out-Null
+    if ($LASTEXITCODE -ne 0) { throw "Limpeza de tíquetes Kerberos falhou (código $LASTEXITCODE)." }
     Write-Host "Acessos antigos removidos com sucesso." -ForegroundColor DarkGray
 
     Write-Host "`n[2/2] Atualizando Politicas de Grupo do Usuario..." -ForegroundColor Yellow
     gpupdate /target:user /force | Out-Null
+    if ($LASTEXITCODE -ne 0) { throw "Atualização das políticas de usuário falhou (código $LASTEXITCODE)." }
     Write-Host "Novas permissoes aplicadas com sucesso." -ForegroundColor DarkGray
 
     Write-Host "`n[SUCESSO] Sincronizacao concluida! Tente acessar a pasta ou sistema novamente." -ForegroundColor Green

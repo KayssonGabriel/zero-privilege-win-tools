@@ -39,16 +39,22 @@ Start-Transcript -Path $LogFile -Append -NoClobber | Out-Null
 try {
     Write-Host "`nIniciando Limpeza de Temporarios (User Mode)..." -ForegroundColor Cyan
 
-    $TempPaths = @(
-        $env:TEMP,
-        "$env:LOCALAPPDATA\Temp"
-    )
-
-    foreach ($Path in $TempPaths) {
-        if (Test-Path -Path $Path) {
+    $TempPaths = @($env:TEMP)
+    if ($env:LOCALAPPDATA) {
+        $TempPaths += Join-Path $env:LOCALAPPDATA 'Temp'
+    }
+    $falhas = @()
+    foreach ($Path in ($TempPaths | Where-Object { $_ } | Select-Object -Unique)) {
+        if (Test-Path -LiteralPath $Path -PathType Container) {
             Write-Host "Limpando pasta: $Path" -ForegroundColor Yellow
-            Get-ChildItem -Path $Path -Recurse -Force -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+            foreach ($item in (Get-ChildItem -LiteralPath $Path -Force)) {
+                $recursivo = -not ($item.Attributes -band [IO.FileAttributes]::ReparsePoint)
+                Remove-Item -LiteralPath $item.FullName -Recurse:$recursivo -Force -ErrorAction SilentlyContinue -ErrorVariable +falhas
+            }
         }
+    }
+    if ($falhas.Count -gt 0) {
+        throw "Alguns arquivos temporários ficaram pendentes. Falha de remoção em $($falhas.Count) item(ns)."
     }
     
     Write-Host "`n[SUCESSO] Limpeza de arquivos temporarios concluida com seguranca!" -ForegroundColor Green
